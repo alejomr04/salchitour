@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Salchitour 2025 · La mejor salchipapa del eje</title>
+<style>
+  :root {
+    --bg: #fff7ed;
+    --bg-2: #ffe8cc;
+    --card: #ffffff;
+    --text: #26170c;
+    --muted: #7c5a3e;
+    --brand: #f97316;
+    --brand-2: #e11d48;
+    --ring: rgba(249, 115, 22, .35);
+    --border: rgba(124, 90, 62, .18);
+    --shadow: 0 10px 30px -12px rgba(120, 60, 10, .28);
+  }
+  [data-theme="dark"] {
+    --bg: #17110c;
+    --bg-2: #241a12;
+    --card: #221811;
+    --text: #fdece0;
+    --muted: #c9a98f;
+    --brand: #fb923c;
+    --brand-2: #fb7185;
+    --ring: rgba(251, 146, 60, .35);
+    --border: rgba(253, 236, 224, .12);
+    --shadow: 0 10px 30px -12px rgba(0, 0, 0, .6);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 500px at 10% -10%, var(--bg-2), transparent 60%),
+      radial-gradient(900px 420px at 95% 0%, rgba(225, 29, 72, .12), transparent 55%),
+      var(--bg);
+    transition: background .25s, color .25s;
+  }
+  a { color: inherit; }
+  button { font: inherit; cursor: pointer; }
+
+  .wrap { width: min(1140px, 94vw); margin: 0 auto; padding: 28px 0 80px; }
+
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .logo {
+    width: 48px; height: 48px; display: grid; place-items: center;
+    font-size: 26px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    box-shadow: var(--shadow);
+  }
+  .brand h1 { font-size: clamp(20px, 3vw, 28px); margin: 0; letter-spacing: -.02em; }
+  .brand p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .top-actions { display: flex; gap: 10px; align-items: center; }
+  .icon-btn {
+    width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text); display: grid; place-items: center;
+    font-size: 18px; transition: transform .15s, border-color .15s;
+  }
+  .icon-btn:hover { transform: translateY(-2px); border-color: var(--brand); }
+
+  .hero {
+    margin-top: 22px; padding: clamp(22px, 4vw, 40px); border-radius: 24px;
+    background: linear-gradient(135deg, rgba(249,115,22,.14), rgba(225,29,72,.10));
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: "🍟"; position: absolute; right: -10px; bottom: -30px; font-size: 150px;
+    opacity: .12; transform: rotate(-12deg); pointer-events: none;
+  }
+  .hero h2 { margin: 0 0 8px; font-size: clamp(24px, 4vw, 40px); line-height: 1.1; letter-spacing: -.03em; }
+  .hero h2 span { background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { margin: 0; max-width: 60ch; color: var(--muted); font-size: 15px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 10px 16px; display: flex; align-items: baseline; gap: 8px; box-shadow: var(--shadow);
+  }
+  .stat b { font-size: 20px; }
+  .stat span { font-size: 12px; color: var(--muted); }
+
+  .section-title { margin: 44px 0 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .section-title h3 { margin: 0; font-size: clamp(20px, 3vw, 26px); letter-spacing: -.02em; }
+  .section-title p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+  .controls {
+    margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    position: sticky; top: 10px; z-index: 20;
+  }
+  .search {
+    flex: 1 1 260px; display: flex; align-items: center; gap: 10px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 0 14px; box-shadow: var(--shadow);
+  }
+  .search input {
+    width: 100%; border: 0; outline: 0; background: transparent; color: var(--text);
+    padding: 13px 0; font-size: 15px;
+  }
+  .search:focus-within { border-color: var(--brand); box-shadow: 0 0 0 4px var(--ring); }
+
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    border: 1px solid var(--border); background: var(--card); color: var(--muted);
+    padding: 10px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    transition: all .15s;
+  }
+  .chip:hover { border-color: var(--brand); color: var(--text); }
+  .chip.active {
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    border-color: transparent; color: #fff; box-shadow: var(--shadow);
+  }
+  .chip .count { opacity: .75; font-weight: 500; margin-left: 4px; }
+
+  .panel {
+    margin-top: 22px; display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px; color: var(--muted); font-size: 13px;
+  }
+  select {
+    border: 1px solid var(--border); background: var(--card); color: var(--text);
+    padding: 9px 12px; border-radius: 10px; font-size: 13px; outline: none;
+  }
+  select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--ring); }
+
+  .grid {
+    margin-top: 14px; display: grid; gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+  }
+  .card {
+    position: relative; background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; padding: 18px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform .18s, border-color .18s, box-shadow .18s;
+    animation: pop .35s ease both;
+  }
+  @keyframes pop { from { opacity: 0; transform: translateY(8px); } }
+  .card:hover { transform: translateY(-4px); border-color: rgba(249,115,22,.5); }
+  .card.visited { border-color: #22c55e; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .avatar {
+    width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center;
+    font-size: 27px; background: linear-gradient(135deg, rgba(249,115,22,.18), rgba(225,29,72,.14));
+    border: 1px solid var(--border); flex: 0 0 auto; overflow: hidden; position: relative;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .avatar .cam {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    background: rgba(0,0,0,.45); color: #fff; font-size: 18px; opacity: 0;
+    transition: opacity .15s;
+  }
+  .avatar:hover .cam { opacity: 1; }
+  .fav {
+    border: 0; background: transparent; font-size: 20px; line-height: 1; padding: 4px;
+    filter: grayscale(1); opacity: .55; transition: transform .15s, filter .15s, opacity .15s;
+  }
+  .fav:hover { transform: scale(1.15); }
+  .fav.on { filter: none; opacity: 1; transform: scale(1.1); }
+
+  .card h3 { margin: 0; font-size: 16.5px; line-height: 1.25; letter-spacing: -.01em; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge {
+    font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 999px;
+    background: rgba(249,115,22,.12); color: var(--brand); border: 1px solid rgba(249,115,22,.25);
+  }
+  .badge.city { background: rgba(37,99,235,.10); color: #2563eb; border-color: rgba(37,99,235,.25); }
+  [data-theme="dark"] .badge.city { color: #93c5fd; border-color: rgba(147,197,253,.3); }
+  .badge.ok { background: rgba(34,197,94,.12); color: #16a34a; border-color: rgba(34,197,94,.3); }
+  [data-theme="dark"] .badge.ok { color: #86efac; }
+  .badge.place { background: rgba(168,85,247,.12); color: #9333ea; border-color: rgba(168,85,247,.25); }
+  [data-theme="dark"] .badge.place { color: #d8b4fe; }
+
+  .stars { display: flex; gap: 2px; }
+  .stars button {
+    border: 0; background: transparent; padding: 0; font-size: 16px; line-height: 1;
+    filter: grayscale(1); opacity: .45; transition: transform .12s, filter .12s, opacity .12s;
+  }
+  .stars button:hover { transform: scale(1.2); }
+  .stars button.on { filter: none; opacity: 1; }
+
+  .card-actions { display: flex; gap: 8px; margin-top: auto; }
+  .btn {
+    flex: 1; text-align: center; text-decoration: none; border-radius: 11px;
+    padding: 10px 12px; font-size: 13px; font-weight: 700; border: 1px solid transparent;
+    transition: transform .15s, filter .15s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .btn.maps { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff; }
+  .btn.ghost { background: transparent; border-color: var(--border); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--brand); }
+  .btn.small { padding: 7px 10px; font-size: 12px; }
+
+  .empty {
+    grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--muted);
+    border: 2px dashed var(--border); border-radius: 18px;
+  }
+  .empty b { display: block; font-size: 34px; margin-bottom: 8px; }
+
+  /* ---------- Products ---------- */
+  .product-card {
+    display: grid; grid-template-columns: 110px 1fr; gap: 14px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 16px; box-shadow: var(--shadow); animation: pop .35s ease both;
+  }
+  .product-img {
+    width: 110px; height: 110px; border-radius: 14px; overflow: hidden;
+    background: linear-gradient(135deg, rgba(249,115,22,.18), rgba(225,29,72,.14));
+    display: grid; place-items: center; font-size: 46px; position: relative;
+    border: 1px solid var(--border);
+  }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .product-img .cam {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    background: rgba(0,0,0,.5); color: #fff; font-size: 22px; opacity: 0; transition: opacity .15s;
+    cursor: pointer;
+  }
+  .product-img:hover .cam { opacity: 1; }
+  .product-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .product-body h4 { margin: 0; font-size: 17px; line-height: 1.2; }
+  .product-body .desc {
+    color: var(--muted); font-size: 13px; line-height: 1.45;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .product-body .desc.expanded { -webkit-line-clamp: unset; }
+  .product-actions { display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap; }
+  .product-actions .btn { flex: 0 0 auto; padding: 7px 12px; font-size: 12px; }
+
+  .add-bar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+
+  /* ---------- Modal ---------- */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(20, 10, 4, .55); backdrop-filter: blur(4px);
+    display: none; place-items: center; padding: 18px; z-index: 50;
+  }
+  .overlay.open { display: grid; animation: fade .2s ease; }
+  @keyframes fade { from { opacity: 0; } }
+  .modal {
+    width: min(520px, 100%); background: var(--card); border: 1px solid var(--border);
+    border-radius: 22px; padding: 24px; box-shadow: 0 30px 70px -20px rgba(0,0,0,.5);
+    animation: up .25s cubic-bezier(.2,.8,.3,1.2); max-height: 90vh; overflow: auto;
+  }
+  @keyframes up { from { transform: translateY(20px) scale(.98); opacity: 0; } }
+  .modal-head { display: flex; gap: 14px; align-items: center; }
+  .modal-head h3 { margin: 0; font-size: 21px; line-height: 1.2; }
+  .modal-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .modal-body { margin-top: 16px; display: grid; gap: 12px; }
+  .field { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; }
+  .field .label { font-size: 13px; font-weight: 600; }
+  .field .label small { display: block; font-weight: 400; color: var(--muted); }
+  .switch { position: relative; width: 46px; height: 26px; flex: 0 0 auto; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch span {
+    position: absolute; inset: 0; border-radius: 999px; background: rgba(124,90,62,.3);
+    transition: .2s; cursor: pointer;
+  }
+  .switch span::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+    border-radius: 50%; background: #fff; transition: .2s; box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
+  .switch input:checked + span { background: #22c55e; }
+  .switch input:checked + span::after { transform: translateX(20px); }
+  .modal .stars button { font-size: 24px; }
+  .modal-foot { margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .note { font-size: 12px; color: var(--muted); margin: 0; text-align: center; }
+
+  .form-row { display: grid; gap: 6px; }
+  .form-row label { font-size: 13px; font-weight: 600; }
+  .form-row input, .form-row textarea, .form-row select {
+    width: 100%; border: 1px solid var(--border); background: var(--card); color: var(--text);
+    padding: 11px 12px; border-radius: 10px; font-size: 14px; font-family: inherit; outline: none;
+  }
+  .form-row textarea { min-height: 90px; resize: vertical; }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--ring); }
+  .file-hint { font-size: 12px; color: var(--muted); }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); padding: 12px 20px; border-radius: 12px;
+    font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none;
+    transition: .25s; z-index: 100; box-shadow: var(--shadow);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  footer { margin-top: 44px; text-align: center; color: var(--muted); font-size: 12px; }
+  footer a { color: var(--brand); font-weight: 600; text-decoration: none; }
+
+  @media (max-width: 560px) {
+    .wrap { padding-top: 18px; }
+    .brand p { display: none; }
+    .stats { gap: 8px; }
+    .stat { padding: 8px 12px; }
+    .controls { position: static; }
+    .product-card { grid-template-columns: 90px 1fr; }
+    .product-img { width: 90px; height: 90px; font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="logo">🍟</div>
+        <div>
+          <h1>Salchitour 2025</h1>
+          <p>La mejor salchipapa del eje cafetero</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="icon-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdE9dVV-QyxsFKEi3O328da3deO_3iZ6w-eI46wbGbbaSRUYg/viewform" target="_blank" rel="noopener" title="Ir a votar">🗳️</a>
+        <button class="icon-btn" id="themeBtn" title="Cambiar tema" aria-label="Cambiar tema">🌙</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>Encuentra tu <span>salchipapa favorita</span></h2>
+      <p>Explora los 14 participantes, márcalos como visitados y ponles tu propia calificación. Ahora también puedes subir fotos de cada lugar y de los platos. Tus datos se guardan solo en este navegador.</p>
+      <div class="stats">
+        <div class="stat"><b id="statTotal">0</b><span>participantes</span></div>
+        <div class="stat"><b id="statVisited">0</b><span>visitados</span></div>
+        <div class="stat"><b id="statFavs">0</b><span>favoritos</span></div>
+        <div class="stat"><b id="statProducts">0</b><span>platos</span></div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <label class="search">
+        <span aria-hidden="true">🔎</span>
+        <input id="q" type="search" placeholder="Buscar por nombre o ciudad…" autocomplete="off" aria-label="Buscar" />
+      </label>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por ciudad"></div>
+    </div>
+
+    <div class="panel">
+      <span id="resultCount">14 lugares</span>
+      <label>
+        Ordenar:
+        <select id="sort">
+          <option value="name">Nombre (A–Z)</option>
+          <option value="city">Ciudad</option>
+          <option value="rating">Mi calificación</option>
+          <option value="visited">Visitados primero</option>
+        </select>
+      </label>
+    </div>
+
+    <main class="grid" id="grid" aria-live="polite"></main>
+
+    <!-- Productos -->
+    <div class="section-title">
+      <div>
+        <h3>🍔 Platos destacados</h3>
+        <p>Cada plato con su foto y su publicación original en Instagram.</p>
+      </div>
+    </div>
+    <div id="productGrid" style="display:grid; gap:14px;"></div>
+
+    <footer>
+      Datos tomados de <a href="https://linkfly.to/Salchitour" target="_blank" rel="noopener">Salchitour (Linkfly)</a> ·
+      Hecho para elegir la mejor salchipapa del eje 2025 🍔
+    </footer>
+  </div>
+
+  <!-- Modal lugar -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="avatar" id="mAvatar">🍟</div>
+        <div>
+          <h3 id="modalTitle">Lugar</h3>
+          <p id="mCity">Ciudad</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <div class="label">Visitado<small>¿Ya probaste su salchipapa?</small></div>
+          <label class="switch"><input type="checkbox" id="mVisited" /><span></span></label>
+        </div>
+        <div class="field">
+          <div class="label">Mi calificación<small>Tu puntuación personal</small></div>
+          <div class="stars" id="mStars" role="group" aria-label="Calificación"></div>
+        </div>
+        <div class="field">
+          <div class="label">Favorito<small>Guárdalo para volver</small></div>
+          <button class="fav" id="mFav" style="font-size:24px" aria-label="Favorito">❤️</button>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <a class="btn maps" id="mMaps" target="_blank" rel="noopener">📍 Abrir en Maps</a>
+        <button class="btn ghost" id="mClose">Cerrar</button>
+      </div>
+      <p class="note">Los cambios se guardan automáticamente.</p>
+    </div>
+  </div>
+
+  <!-- Modal producto -->
+  <div class="overlay" id="imgOverlay" role="dialog" aria-modal="true" aria-labelledby="imgTitle">
+    <div class="modal" style="max-width:720px">
+      <img id="imgFull" src="" alt="" style="width:100%;border-radius:14px;border:1px solid var(--border)" />
+      <div style="margin-top:14px">
+        <h3 id="imgTitle" style="margin:0 0 4px">Plato</h3>
+        <p id="imgPlace" style="margin:0 0 8px;color:var(--muted);font-size:13px"></p>
+        <p id="imgDesc" style="margin:0;color:var(--muted);font-size:13px;line-height:1.5;white-space:pre-line;max-height:220px;overflow:auto"></p>
+      </div>
+      <div class="modal-foot">
+        <a class="btn maps" id="imgIg" target="_blank" rel="noopener">📸 Ver en Instagram</a>
+        <button class="btn ghost" id="imgClose">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+<script>
+const PLACES = [
+  { id: "patata-circunvalar", name: "Señor Patata Circunvalar", city: "Pereira",      emoji: "🥔", maps: "https://maps.app.goo.gl/s9yaHJcr5fYHqD6BA?g_st=com.google.maps.preview.copy" },
+  { id: "patata-galicia",     name: "Señor Patata Galicia",     city: "Pereira",      emoji: "🥔", maps: "https://maps.app.goo.gl/RH8h4WBDnQU2mpJh9?g_st=com.google.maps.preview.copy" },
+  { id: "patata-dosquebradas",name: "Señor Patata Dosquebradas",city: "Dosquebradas", emoji: "🥔", maps: "https://maps.app.goo.gl/A7WCimn977xxRwvCA?g_st=com.google.maps.preview.copy" },
+  { id: "perla-pereira",      name: "La Perla",                 city: "Pereira",      emoji: "🦪", maps: "https://maps.app.goo.gl/Nh6Hd6u16hhRvMR36?g_st=com.google.maps.preview.copy" },
+  { id: "perla-dosquebradas", name: "La Perla",                 city: "Dosquebradas", emoji: "🦪", maps: "https://maps.app.goo.gl/qZv1jqU4hPWdZLvp8?g_st=com.google.maps.preview.copy" },
+  { id: "milkshake",          name: "Milkshake",                city: "Pereira",      emoji: "🥤", maps: "https://maps.app.goo.gl/oFg5ATL2C8RWfFBV8?g_st=com.google.maps.preview.copy" },
+  { id: "don-papeton",        name: "Don Papetón",              city: "Pereira",      emoji: "🍟", maps: "https://maps.app.goo.gl/2cFCTtNC2z5h7VDBA?g_st=com.google.maps.preview.copy" },
+  { id: "la-filua",           name: "La Filua",                 city: "Dosquebradas", emoji: "🍔", maps: "https://maps.app.goo.gl/UT37xtpiidHubwJJ7?g_st=com.google.maps.preview.copy" },
+  { id: "salchipaisas-dosque",name: "Salchipaisas",             city: "Dosquebradas", emoji: "🌭", maps: "https://maps.app.goo.gl/xjM1etMwutrWB1kc6?g_st=com.google.maps.preview.copy" },
+  { id: "salchipaisas-corales",name:"Salchipaisas",             city: "Dosquebradas", emoji: "🌭", maps: "https://maps.app.goo.gl/mDp8o7KFwBkVJcUw5?g_st=com.google.maps.preview.copy" },
+  { id: "salchipaisas-cll21", name: "Salchipaisas",             city: "Pereira",      emoji: "🌭", maps: "https://maps.app.goo.gl/Pdqc7TcfyAaG23ZM6?g_st=com.google.maps.preview.copy" },
+  { id: "salchiwarrior",      name: "Salchiwarrior",            city: "Dosquebradas", emoji: "⚔️", maps: "https://maps.app.goo.gl/hhvh21xc2M6zUyCAA?g_st=com.google.maps.preview.copy" },
+  { id: "once-once",          name: "Once Once",                city: "Pereira",      emoji: "1️⃣", maps: "https://maps.app.goo.gl/nsQvHRycdHNjKfVi8?g_st=com.google.maps.preview.copy" },
+  { id: "don-king",           name: "Don King",                 city: "Pereira",      emoji: "👑", maps: "https://maps.app.goo.gl/oAgdqKuuBUWcJag49?g_st=com.google.maps.preview.copy" },
+];
+
+const MONTANETON_DESC = "El sabor de nuestras montañas, la memoria de nuestras cocinas.\n\nMontañetón rinde homenaje a nuestras cocineras cafeteras, aquellas mujeres que, entre huertas y fogones, cocinaban sin afán, aprovechando lo que la tierra y la finca les ofrecían para alimentar a sus familias con sabor, ingenio y tradición.\n\nSu corazón es una mezcla de res y cerdo desmechados, cocinados lentamente en una reducción de vegetales de huerta y salsa criolla montañera, que evoca los sabores auténticos de nuestras cocinas de campo.\n\nTodo comienza sobre una base de papas artesanales, acompañadas de salsas ahumadas y salchicha jugosa de la casa, realzada con una reducción de tocino al fogón. Se suman un pico de gallo montañero con piña de Cerritos. Como toque dulce, maduritos dorados bañados en melado de panela y canela inspirado en las bebidas tradicionales de nuestra tierra con queso cuajada de La Florida; y, para finalizar, una lluvia de chips de plátano verde que aporta ese toque crocante a cada bocado.\n\nEn Don Papetón transformamos esa memoria campesina en una creación atrevida y contemporánea, porque nuestras raíces no solo se recuerdan: también se reinventan y se sirven a la mesa.";
+
+const FIAMBRE_DESC = "FIAMBRE CALLEJERO 👨🏻‍🌾🌿\n“La tradición se viste de calle”\n\nNos fuimos a nuestras raíces, a esas tradiciones que heredamos de nuestros ancestros, donde el fiambre cafetero, envuelto en hoja de congo, llevaba consigo el sabor de nuestra tierra y la historia de nuestra gente.\n\nHoy, en La Perla, quisimos honrar ese legado y traerlo a nuestra cocina urbana, fusionando la tradición campesina con la irreverencia y el sabor callejero que nos caracteriza.\n\nEnvuelto en hoja de congo, nuestro Fiambre Callejero combina papas artesanales, salchicha, salsas, queso fundido, carne montañera a nuestro estilo, arepitas fritas con guacamole y huevo. Una mezcla que conecta nuestras raíces con una nueva generación de sabores.\nPorque la tradición no se queda en el pasado: se transforma, evoluciona y se sirve con todo el sabor de nuestra tierra.";
+
+const KEY = "salchitour.v2";
+const PROD_KEY = "salchitour.products.v4";
+const IMG_KEY = "salchitour.images.v2";
+
+const store = { favs: new Set(), visits: new Set(), ratings: {}, theme: "light", placeImages: {} };
+const products = [];
+
+function load() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(KEY) || "{}");
+    store.favs = new Set(raw.favs || []);
+    store.visits = new Set(raw.visits || []);
+    store.ratings = raw.ratings || {};
+    store.placeImages = raw.placeImages || {};
+    store.theme = raw.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  } catch (e) {}
+  try {
+    const p = JSON.parse(localStorage.getItem(PROD_KEY));
+    if (Array.isArray(p) && p.length) products.push(...p);
+    else seedProducts();
+  } catch (e) { seedProducts(); }
+  if (!products.length) seedProducts();
+}
+function seedProducts() {
+  products.push({
+    id: "montaneton",
+    name: "Montañetón",
+    placeId: "don-papeton",
+    place: "Don Papetón (Pereira)",
+    desc: MONTANETON_DESC,
+    emoji: "🍔",
+    image: "img/montaneton.jpg",
+    ig: "https://www.instagram.com/p/DfVjgxTlIOx/",
+  });
+  products.push({
+    id: "fiambre-callejero",
+    name: "Fiambre Callejero",
+    placeId: "perla-pereira",
+    place: "La Perla (Pereira)",
+    desc: FIAMBRE_DESC,
+    emoji: "🌿",
+    image: "img/fiambre.jpg",
+    ig: "https://www.instagram.com/p/DfVtd-wFGo_/",
+  });
+  products.push({
+    id: "arriera",
+    name: "Salchipapa Arriera",
+    placeId: "salchiwarrior",
+    place: "Salchiwarrior (Dosquebradas)",
+    desc: "¡El viaje definitivo de la calle al campo! 🤠✨\n\nNuestra SALCHIPAPA ARRIERA nace de un recuerdo imborrable: el sonido de las risas corriendo por los patios de nuestras casas en Caldas y Risaralda, buscando entre las hojas esos pequeños farolitos dorados de uchuva que sabían a travesura y libertad.\nQuisimos rescatar ese fruto silvestre y combinarlo con el alma de nuestra mesa (la panela) para crear algo único. Por eso, coronamos esta obra maestra con:\n\n🥩 Un CHICHARRÓN APANADO crujiente por fuera y tierno por dentro, bañado en nuestra salsa estrella de uchuva y panela.\n🌭 El orgullo indiscutible de nuestra tradición: un jugoso CHORIZO SANTAROSANO.\n🥑 Un fresco GUACAMOLE elaborado con el mejor aguacate de nuestra región.\n🍌 El toque dulce y suave del PLÁTANO MADURO acompañado de nuestra salsa de maíz hecha en casa.\nBajo el reglamento del SalchiTour, unimos todo esto sobre una base crujiente de papa mixta (criolla y francesa), salchicha americana, queso mozzarella fundido y salsas de la casa.\nEs un tributo a nuestros ancestros arrieros, a los patios de la abuela y a los sabores que nos hacen sentir orgullosos del Eje Cafetero.\n¡Esperamos que la disfruten tanto como nosotros al crearla! ❤️🔥\n📍 ¡Ven a probarla y vívelo tú mismo!\n— EQUIPO SALCHIWARRIOR",
+    emoji: "🤠",
+    image: "img/a_arriera.jpg",
+    ig: "https://www.instagram.com/p/DfV2UPnlFGe/",
+  });
+  products.push({
+    id: "fritanguita",
+    name: "Fritanguita",
+    placeId: "salchipaisas-cll21",
+    place: "Salchipaisas (Pereira)",
+    desc: "Desde el corazón del Eje Cafetero, y cargada de nuestras tradiciones navideñas, llega la Fritanguita: una fiesta de sabores en cada bocado. Chicharrón crocante, arepa frita, madurito, guacamole y pico de gallo, servidos sobre nuestras papas doraditas y salchicha americana. Viene a recordarte lo que es un diciembre en Colombia.",
+    emoji: "🎄",
+    image: "img/b_fritanguita.jpg",
+    ig: "https://www.instagram.com/p/DfXdl9TlC0L/",
+  });
+  products.push({
+    id: "crispy-beef",
+    name: "Salchipapa Crispy Beef",
+    placeId: null,
+    place: "Papas Engalladas",
+    desc: "😋🔥salchipapa crispy beef\n\nEn PAPAS ENGALLADAS creemos que los grandes sabores nacen de nuestras raíces.\n\nPor eso, en cada creación conservamos la autenticidad del campo: la tradición de nuestra papa artesanal Pastusa, cultivada en tierras del sur de Colombia, y el sabor inconfundible de nuestra tierra cafetera, con carnes preparadas al barril y con ese toque ahumado que despierta los sentidos.\n\nPollo crispi, carne de cerdo ahumada desmechada en salsa bbq grill, queso Philadelphia, mermelada de tocineta en salsa de cafe, cebolla crispi, salchicha parrillera, papas a la francesa (Pastusa original)",
+    emoji: "🥩",
+    image: "img/c_crispybeef.jpg",
+    ig: "https://www.instagram.com/p/DfXgzhVlMH5/",
+  });
+  products.push({
+    id: "la-chanchis",
+    name: "La Chanchis",
+    placeId: "milkshake",
+    place: "Milkshake (Pereira)",
+    desc: "🔥LA CHANCHIS🔥\n\nUna explosión de sabor con identidad cafetera.\nUna salchipapa creada para rendir homenaje a los sabores de nuestra tierra. La crocancia de las papas a la francesa se combina con salchicha, cerdo bañado en salsa BBQ, maíz tierno y el inconfundible sabor del chorizo Santa Rosano, todo acompañado de nuestra deliciosa salsa de la casa.\nIngredientes:\nPapas a la francesa.\nSalchicha.\nCerdo en salsa BBQ.\nChorizo Santa Rosano.\nMaíz tierno.\nSalsa especial de la casa.",
+    emoji: "🐷",
+    image: "img/d_lachanchis.jpg",
+    ig: "https://www.instagram.com/p/DfXoxCDFHmk/",
+  });
+  products.push({
+    id: "la-lidiosa",
+    name: "La Lidiosa",
+    placeId: null,
+    place: "Señor Pig",
+    desc: "🔥 LA LIDIOSA🔥\n\nPapa francesa\nSalsa de la casa\nQueso mozzarella rallado\nCarne desmechada en salsa criolla paisa\nSalchicha long en salsa bbq\nSalsa Alfredo\nTocineta picada",
+    emoji: "🔥",
+    image: "img/e_lalidiosa.jpg",
+    ig: "https://www.instagram.com/p/DfXrBg6FCkY/",
+  });
+  products.push({
+    id: "la-calena",
+    name: "La Caleña",
+    placeId: null,
+    place: "Salchipapas Las Caleñas (Pereira)",
+    desc: "Dicen que el amor entra por los ojos, pero el nuestro entra por el alma. ❤️💛\nEn Las Caleñas creemos que cada sabor cuenta una historia. Por eso creamos una salchipapa que une la alegría del Valle del Cauca con el corazón del Eje Cafetero.\n\nUna combinación de papa mixta crocante, salchicha con auténtico espíritu caleño, carne desmechada, pollo crispy y queso mozzarella gratinado, acompañada de nuestras inconfundibles salsas Verde y de la Casa.\nPero nuestra estrella es el plátano maduro, bañado en una reducción artesanal de miel de panela y café, un homenaje a nuestra tierra cafetera que aporta un contraste dulce y sorprendente.\n\nMás que una salchipapa, somos el encuentro de dos tierras, dos culturas y una misma pasión por el sabor.\n¡Descubran cómo suena Cali cuando se encuentra con el corazón del Eje Cafetero!",
+    emoji: "💃",
+    image: "img/f_lascalenas.jpg",
+    ig: "https://www.instagram.com/p/DfXuugrlCgh/",
+  });
+  products.push({
+    id: "salchiking",
+    name: "Salchiking",
+    placeId: "don-king",
+    place: "Don King (Pereira)",
+    desc: "🔥 ¡Don King se vino a romper la mesa en este Salchitour!\n\nLes presento la Salchiking, una locura pura de sabor artesanal hecha con el corazón y toda la sabrosura de nuestro Eje Cafetero. Aquí no se viene a escatimar nada, cada capa está pensada para hacer babear:\n\n🌭 Base potente: Papa crujiente, buena salchicha, chorizo con sazón propia y maicitos dulcecitos.\n🧀 El toque brutal: Queso derretido, plátano caladito y unas alas BBQ para rematar.\n🍍 El contraste perfecto: Piña, la salsa especial de la casa y un toque único de salsa de uchuva que eleva esta monstruosidad a otro nivel.\n\nSe siente el amor en cada bocado y el toque de la casa de Don King.",
+    emoji: "👑",
+    image: "img/g_salchiking.jpg",
+    ig: "https://www.instagram.com/p/DfX00-mlAas/",
+  });
+  products.push({
+    id: "yami",
+    name: "La Yami",
+    placeId: null,
+    place: "Yami Salchipapas (Pereira)",
+    desc: "A los que ya hacen parte de la familia Yami, les tenemos un nuevo sabor para sorprenderlos 🍟 Y a quienes todavía no nos conocen, esta es la oportunidad perfecta para descubrir lo que preparamos en nuestra cocina. 👀🔥\n\nNos sumamos al salchitour con una creación que tiene de todo:\n\n🍟Papa capira artesanal\n👑 Salchicha premium\n🤎 Costilla en salsa especial de café\n💛 Madurito\n🧀 Queso fundido\n🫓 Arepita frita\n🥚 Huevo de codorniz\n\n¡Esta experiencia los espera en nuestro NUEVO RESTAURANTE!\n\n📍 Ven, conoce nuestro nuevo espacio y disfruta una propuesta que lleva el sello de Yami Salchipapas",
+    emoji: "🍟",
+    image: "img/h_yami.jpg",
+    ig: "https://www.instagram.com/p/DfX6N4MlGrk/",
+  });
+  products.push({
+    id: "la-pig-del-eje",
+    name: "La Pig del Eje",
+    placeId: null,
+    place: "Señor Pig",
+    desc: "La Pig del Eje 🔥🐽\n\nuna verdadera combinación de sabores artesanales hecha con todo el amor y el alma campesina de nuestro Eje Cafetero. Aquí hay poder, crocancia y esa sazón criolla que de verdad enamora:\n\n🥔 Doble base: Papa criolla doradita y papa francesa bien crujiente.\n🌭 Puro poder carnero: Salchicha americana premium, chorizo santarosano de verdad y jugosos tenders de pollo.\n🌽 El toque dulce y de la casa: Maíz dulce, plátano maduro guayabo, queso mozzarella estirando como se debe y la salsa especial de la casa.\n🍯 El remate épico: ¡Rollos de arequipe! Un contraste brutal entre lo salado y lo dulce que les va a volar la cabeza.\nSabor artesanal, ingredientes de la región y un plato hecho con todo el corazón.",
+    emoji: "🐽",
+    image: "img/i_lapigdeleje.jpg",
+    ig: "https://www.instagram.com/p/DfX_ByRlFud/",
+  });
+  products.push({
+    id: "la-chicharrona",
+    name: "La Chicharrona",
+    placeId: null,
+    place: null,
+    desc: "La Chicharrona 🐷🔥\n\nUna explosión de sabor que mezcla lo mejor del Eje Cafetero con el sabor costeño. Lleva chorizo santarrosano, butifarra, chicharrón crocante, papitas fritas, maduritos, queso costeño, papitas ripio, lechuga fresca y nuestras irresistibles salsas de la casa. ¡Una verdadera parranda de sabores!",
+    emoji: "🐷",
+    image: "img/j_lachicharrona.jpg",
+    ig: "https://www.instagram.com/p/DfYI0A7lB5F/",
+  });
+  products.push({
+    id: "spicy-gold",
+    name: "Spicy Gold",
+    placeId: null,
+    place: null,
+    desc: "Spicy gold (oro picante)\nSpicy (picante)\nHoney spicy (miel picante)\nSpicy fusión (fusión picante)\n\nBondiola y pollo en marinada especial del chef, glaseados en salsa artesanal a base de nuestra emblemática piña oro miel de Cerritos, mezclada con notas de maracuya, queso mozarella fundido, salsa Emmy, cubos de plátano maduro, cebolla dulce encurtida y papas artesanales crocantes.\n\nDescripción salsa Emmy\n\nNuestra salsa Emmy nace de la elaboración de una mayonesa japonesa artesanal, Sésamo negro tostado y una base de especias asiáticas.\n\nLo que logramos con nuestra salsa fue generar una explosión de sabores en nuestras papilas gustativas.\nMezclando sabores dulces, salados, ácidos y umami",
+    emoji: "🌶️",
+    image: "img/k_spicygold.jpg",
+    ig: "https://www.instagram.com/p/DfYV9GKlIBl/",
+  });
+  products.push({
+    id: "la-querendona",
+    name: "La Querendona",
+    placeId: null,
+    place: null,
+    desc: "La Querendona\n\nEn homenaje a esta hermosa ciudad que nos abrio sus puertas traemos la querendona, con papa francesa mccain, queso mozzarella fundido, salchicha zenu, pollo desmechado, piña calada, salsa secreta de la casa, maicitos, salsa tartara y papa ripio.",
+    emoji: "💛",
+    image: "img/l_querendona.jpg",
+    ig: "https://www.instagram.com/p/DfYa6NbFADt/",
+  });
+}
+function save() {
+  localStorage.setItem(KEY, JSON.stringify({
+    favs: [...store.favs],
+    visits: [...store.visits],
+    ratings: store.ratings,
+    placeImages: store.placeImages,
+    theme: store.theme,
+  }));
+  localStorage.setItem(PROD_KEY, JSON.stringify(products));
+}
+
+const $ = (s, el = document) => el.querySelector(s);
+const grid = $("#grid");
+const chips = $("#chips");
+const qInput = $("#q");
+const sortSel = $("#sort");
+const productGrid = $("#productGrid");
+let filterCity = "all";
+let toastTimer = null;
+let modalPlace = null;
+let pendingUploadPlace = null;
+let pendingUploadProduct = null;
+
+function toast(msg) {
+  const el = $("#toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+}
+
+function theme(dark) {
+  store.theme = dark ? "dark" : "light";
+  document.documentElement.dataset.theme = store.theme;
+  $("#themeBtn").textContent = dark ? "☀️" : "🌙";
+  save();
+}
+
+function starsHTML(id) {
+  const rating = store.ratings[id] || 0;
+  return [1,2,3,4,5].map(n =>
+    `<button type="button" data-star="${n}" class="${n <= rating ? "on" : ""}" aria-label="${n} estrellas">⭐</button>`
+  ).join("");
+}
+
+function renderChips() {
+  const cities = ["all", ...new Set(PLACES.map(p => p.city))];
+  chips.innerHTML = cities.map(c => {
+    const count = c === "all" ? PLACES.length : PLACES.filter(p => p.city === c).length;
+    const label = c === "all" ? "Todas" : c;
+    return `<button class="chip ${filterCity === c ? "active" : ""}" data-city="${c}">${label}<span class="count">${count}</span></button>`;
+  }).join("");
+}
+
+function visiblePlaces() {
+  const term = qInput.value.trim().toLowerCase();
+  let list = PLACES.filter(p => {
+    const okCity = filterCity === "all" || p.city === filterCity;
+    const okTerm = !term || p.name.toLowerCase().includes(term) || p.city.toLowerCase().includes(term);
+    return okCity && okTerm;
+  });
+  const by = sortSel.value;
+  list.sort((a, b) => {
+    if (by === "name") return a.name.localeCompare(b.name, "es");
+    if (by === "city") return a.city.localeCompare(b.city, "es") || a.name.localeCompare(b.name, "es");
+    if (by === "rating") return (store.ratings[b.id] || 0) - (store.ratings[a.id] || 0) || a.name.localeCompare(b.name, "es");
+    if (by === "visited") return (store.visits.has(b.id) ? 1 : 0) - (store.visits.has(a.id) ? 1 : 0) || a.name.localeCompare(b.name, "es");
+    return 0;
+  });
+  return list;
+}
+
+function avatarHTML(p) {
+  return `<div class="avatar">${p.emoji}</div>`;
+}
+
+function cardHTML(p) {
+  const visited = store.visits.has(p.id);
+  const fav = store.favs.has(p.id);
+  return `
+    <article class="card ${visited ? "visited" : ""}" data-id="${p.id}">
+      <div class="card-top">
+        ${avatarHTML(p)}
+        <button class="fav ${fav ? "on" : ""}" data-act="fav" title="Favorito" aria-label="Marcar favorito" aria-pressed="${fav}">❤️</button>
+      </div>
+      <div>
+        <h3>${p.name}</h3>
+        <div class="meta" style="margin-top:6px">
+          <span class="badge city">📍 ${p.city}</span>
+          <span class="badge">Salchipapa</span>
+          ${visited ? `<span class="badge ok">✓ Visitado</span>` : ""}
+        </div>
+      </div>
+      <div class="stars" data-stars="${p.id}" role="group" aria-label="Mi calificación">${starsHTML(p.id)}</div>
+      <div class="card-actions">
+        <a class="btn maps" href="${p.maps}" target="_blank" rel="noopener">📍 Maps</a>
+        <button class="btn ghost" data-act="detail">Detalles</button>
+      </div>
+    </article>`;
+}
+
+function productCardHTML(pr) {
+  const img = pr.image
+    ? `<img src="${pr.image}" alt="${pr.name}" />`
+    : `<span>${pr.emoji || "🍔"}</span>`;
+  const placeBadge = pr.place ? `<span class="badge place">📍 ${pr.place}</span>` : "";
+  return `
+    <article class="product-card" data-pid="${pr.id}">
+      <button class="product-img" data-act="view" data-pid="${pr.id}" title="Ver imagen en detalle">
+        ${img}
+      </button>
+      <div class="product-body">
+        <h4>${pr.name}</h4>
+        ${placeBadge}
+        <p class="desc" data-desc="${pr.id}">${pr.desc.replace(/\n/g, "<br>")}</p>
+        <div class="product-actions">
+          <button class="btn ghost small" data-act="toggle-desc" data-pid="${pr.id}">Ver más</button>
+          ${pr.ig ? `<a class="btn ghost small" href="${pr.ig}" target="_blank" rel="noopener">📸 Instagram</a>` : ""}
+        </div>
+      </div>
+    </article>`;
+}
+
+function render() {
+  const list = visiblePlaces();
+  grid.innerHTML = list.length
+    ? list.map(cardHTML).join("")
+    : `<div class="empty"><b>🍽️</b>No encontramos lugares con ese filtro.<br>Prueba con otra búsqueda o ciudad.</div>`;
+  $("#resultCount").textContent = `${list.length} ${list.length === 1 ? "lugar" : "lugares"}`;
+  $("#statTotal").textContent = PLACES.length;
+  $("#statVisited").textContent = store.visits.size;
+  $("#statFavs").textContent = store.favs.size;
+  $("#statProducts").textContent = products.length;
+
+  productGrid.innerHTML = products.length
+    ? products.map(productCardHTML).join("")
+    : `<div class="empty"><b>🍔</b>Aún no hay platos destacados.</div>`;
+}
+
+/* ---------- Events: places ---------- */
+grid.addEventListener("click", (e) => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  const id = card.dataset.id;
+  const place = PLACES.find(p => p.id === id);
+  const act = e.target.closest("[data-act]")?.dataset.act;
+  const starBtn = e.target.closest("[data-star]");
+
+  if (starBtn) {
+    const n = Number(starBtn.dataset.star);
+    store.ratings[id] = store.ratings[id] === n ? 0 : n;
+    save(); render(); toast(store.ratings[id] ? `Le diste ${store.ratings[id]} ⭐ a ${place.name}` : "Calificación borrada");
+    return;
+  }
+  if (act === "fav") {
+    if (store.favs.has(id)) { store.favs.delete(id); toast("Quitado de favoritos"); }
+    else { store.favs.add(id); toast("❤️ Agregado a favoritos"); }
+    save(); render(); return;
+  }
+  if (act === "detail") { openModal(place); return; }
+});
+
+chips.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-city]");
+  if (!b) return;
+  filterCity = b.dataset.city;
+  renderChips(); render();
+});
+qInput.addEventListener("input", render);
+sortSel.addEventListener("change", render);
+$("#themeBtn").addEventListener("click", () => theme(store.theme !== "dark"));
+
+/* ---------- Modal lugar ---------- */
+function openModal(place) {
+  modalPlace = place;
+  $("#modalTitle").textContent = place.name;
+  $("#mCity").textContent = `📍 ${place.city} · Salchipapa`;
+  const av = $("#mAvatar");
+  const img = store.placeImages[place.id];
+  av.innerHTML = img ? `<img src="${img}" alt="${place.name}" />` : place.emoji;
+  $("#mMaps").href = place.maps;
+  $("#mVisited").checked = store.visits.has(place.id);
+  $("#mFav").classList.toggle("on", store.favs.has(place.id));
+  $("#mStars").innerHTML = starsHTML(place.id);
+  $("#overlay").classList.add("open");
+  setTimeout(() => $("#mClose").focus(), 30);
+}
+function closeModal() { $("#overlay").classList.remove("open"); modalPlace = null; }
+$("#mClose").addEventListener("click", closeModal);
+$("#overlay").addEventListener("click", (e) => { if (e.target === $("#overlay")) closeModal(); });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if ($("#overlay").classList.contains("open")) closeModal();
+    if ($("#imgOverlay").classList.contains("open")) closeImgModal();
+  }
+});
+
+$("#mVisited").addEventListener("change", (e) => {
+  if (!modalPlace) return;
+  if (e.target.checked) { store.visits.add(modalPlace.id); toast("✓ Marcado como visitado"); }
+  else { store.visits.delete(modalPlace.id); toast("Desmarcado"); }
+  save(); render();
+});
+$("#mFav").addEventListener("click", () => {
+  if (!modalPlace) return;
+  const id = modalPlace.id;
+  if (store.favs.has(id)) { store.favs.delete(id); toast("Quitado de favoritos"); }
+  else { store.favs.add(id); toast("❤️ Agregado a favoritos"); }
+  $("#mFav").classList.toggle("on", store.favs.has(id));
+  save(); render();
+});
+$("#mStars").addEventListener("click", (e) => {
+  const starBtn = e.target.closest("[data-star]");
+  if (!starBtn || !modalPlace) return;
+  const n = Number(starBtn.dataset.star);
+  const id = modalPlace.id;
+  store.ratings[id] = store.ratings[id] === n ? 0 : n;
+  $("#mStars").innerHTML = starsHTML(id);
+  save(); render(); toast(store.ratings[id] ? `Le diste ${store.ratings[id]} ⭐` : "Calificación borrada");
+});
+/* ---------- Productos ---------- */
+productGrid.addEventListener("click", (e) => {
+  const view = e.target.closest("[data-act='view']");
+  if (view) {
+    const pid = view.dataset.pid;
+    const pr = products.find(x => x.id === pid);
+    if (!pr) return;
+    $("#imgFull").src = pr.image || "";
+    $("#imgFull").alt = pr.name;
+    $("#imgTitle").textContent = pr.name;
+    $("#imgPlace").textContent = pr.place ? `📍 ${pr.place}` : "";
+    $("#imgDesc").textContent = pr.desc;
+    $("#imgIg").href = pr.ig || "#";
+    $("#imgIg").style.display = pr.ig ? "" : "none";
+    $("#imgOverlay").classList.add("open");
+    return;
+  }
+  const toggle = e.target.closest("[data-act='toggle-desc']");
+  if (toggle) {
+    const pid = toggle.dataset.pid;
+    const el = document.querySelector(`[data-desc="${pid}"]`);
+    if (el) {
+      el.classList.toggle("expanded");
+      toggle.textContent = el.classList.contains("expanded") ? "Ver menos" : "Ver más";
+    }
+    return;
+  }
+});
+
+function closeImgModal() { $("#imgOverlay").classList.remove("open"); }
+$("#imgClose").addEventListener("click", closeImgModal);
+$("#imgOverlay").addEventListener("click", (e) => { if (e.target === $("#imgOverlay")) closeImgModal(); });
+
+/* ---------- Boot ---------- */
+load();
+theme(store.theme === "dark");
+renderChips();
+render();
+</script>
+</body>
+</html>
